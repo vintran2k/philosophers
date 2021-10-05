@@ -6,7 +6,7 @@
 /*   By: vintran <vintran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 16:49:48 by vintran           #+#    #+#             */
-/*   Updated: 2021/10/05 16:58:57 by vintran          ###   ########.fr       */
+/*   Updated: 2021/10/05 17:16:12 by vintran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int	launching_threading(t_p *philos, t_info *info, pthread_t *th)
 	{
 		if (pthread_create(&th[i], NULL, &routine, &philos[i]))
 			perror("pthread_create failled");
-		usleep(30);
+		//ft_usleep(30);
 		i++;
 	}
 	i = 0;

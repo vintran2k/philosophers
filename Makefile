@@ -6,7 +6,7 @@
 #    By: vintran <vintran@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/01 18:05:53 by vintran           #+#    #+#              #
-#    Updated: 2021/10/05 16:37:48 by vintran          ###   ########.fr        #
+#    Updated: 2021/10/05 17:17:08 by vintran          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ FLAGS				=	-Wall -Wextra -Werror -I ./inc/
 all				:	$(NAME)
 
 $(NAME)			:	$(OBJS) $(HEADER)
-				$(CC) $(FLAGS) -lpthread $(OBJS) -o $(NAME)
+				$(CC) $(FLAGS) $(OBJS) -o $(NAME) -lpthread
 				@echo [$(NAME)] : Created !
 
 clean			:
@@ -44,3 +44,5 @@ fclean			:	clean
 re				:	fclean all
 
 .PHONY: 		clean fclean all re
+
+#valgrind --tool=helgrind ./philo 4 410 200 200
