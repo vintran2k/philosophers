@@ -45,4 +45,4 @@ re				:	fclean all
 
 .PHONY: 		clean fclean all re
 
-#valgrind --tool=helgrind ./philo 4 410 200 200
+#valgrind --tool=helgrind ./philo 4 410 200 200 
