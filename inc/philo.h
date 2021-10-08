@@ -6,7 +6,7 @@
 /*   By: vintran <vintran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/26 16:00:41 by vintran           #+#    #+#             */
-/*   Updated: 2021/09/23 17:51:00 by vintran          ###   ########.fr       */
+/*   Updated: 2021/10/08 14:01:37 by vintran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_p
 	t_info			*info;
 	int				id;
 	int				n;
+	int				count;
 	unsigned int	t_die;
 	unsigned int	t_eat;
 	unsigned int	t_sleep;

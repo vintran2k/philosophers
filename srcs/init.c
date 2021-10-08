@@ -6,7 +6,7 @@
 /*   By: vintran <vintran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/27 17:18:42 by vintran           #+#    #+#             */
-/*   Updated: 2021/09/17 17:26:04 by vintran          ###   ########.fr       */
+/*   Updated: 2021/10/08 14:01:50 by vintran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	init_philos(t_p *philos, t_info *info)
 		philos[i].info = info;
 		philos[i].id = i + 1;
 		philos[i].n = info->n_philo;
+		philos[i].count = 0;
 		philos[i].t_die = info->t_to_die;
 		philos[i].t_eat = info->t_to_eat;
 		philos[i].t_sleep = info->t_to_sleep;
