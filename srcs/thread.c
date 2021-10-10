@@ -12,32 +12,6 @@
 
 #include "philo.h"
 
-int	check_n_meals(t_p *p)
-{
-	int	i;
-
-	i = 0;
-	while (i < p->n)
-	{
-		pthread_mutex_lock(&p->info->m_meals);
-		if (p->info->meals[i] < p->n_meals)
-		{
-			pthread_mutex_unlock(&p->info->m_meals);
-			return (0);
-		}
-		pthread_mutex_unlock(&p->info->m_meals);
-		i++;
-	}
-	pthread_mutex_lock(&p->info->m_msg);
-	pthread_mutex_lock(&p->info->m_stop);
-	if (!p->info->stop)
-		printf("Each philosopher ate %d time(s)\n", p->n_meals);
-	p->info->stop = 1;
-	pthread_mutex_unlock(&p->info->m_msg);
-	pthread_mutex_unlock(&p->info->m_stop);
-	return (1);
-}
-
 void	*is_dead(void *arg)
 {
 	t_p	*p;
@@ -47,21 +21,21 @@ void	*is_dead(void *arg)
 	stop = 0;
 	while (!stop)
 	{
-		if (p->id == 1 && p->n_meals != -1)
-			check_n_meals(p);
 		pthread_mutex_lock(&p->info->m_last_eat);
 		if (get_time() - p->t_last_eat >= p->t_die)
 		{
 			pthread_mutex_unlock(&p->info->m_last_eat);
+			pthread_mutex_lock(&p->info->m_msg);
 			print_status(p, "died");
 			pthread_mutex_lock(&p->info->m_stop);
 			p->info->stop = 1;
 			pthread_mutex_unlock(&p->info->m_stop);
+			pthread_mutex_unlock(&p->info->m_msg);
 		}
 		else
 			pthread_mutex_unlock(&p->info->m_last_eat);
 		pthread_mutex_lock(&p->info->m_stop);
-		stop = p->info->stop;
+		stop = p->info->stop + p->stop;
 		pthread_mutex_unlock(&p->info->m_stop);
 	}
 	return (NULL);
@@ -77,14 +51,14 @@ void	*routine(void *arg)
 	if (pthread_create(&p->faucheuse, NULL, &is_dead, p))
 		perror("pthread_create failled");
 	pthread_detach(p->faucheuse);
-	if (p->id % 2 == 0)
-		ft_usleep(p->t_eat / 10);
+	//if (p->id % 2 == 0)
+		//ft_usleep(p->t_eat / 10);
 	stop = 0;
 	while (!stop)
 	{
 		activity(p);
 		pthread_mutex_lock(&p->info->m_stop);
-		stop = p->info->stop;
+		stop = p->info->stop + p->stop;
 		pthread_mutex_unlock(&p->info->m_stop);
 	}
 	return (NULL);
@@ -101,7 +75,6 @@ void	destroy_mutex(t_info *info, pthread_mutex_t *forks)
 		i++;
 	}
 	pthread_mutex_destroy(&info->m_last_eat);
-	pthread_mutex_destroy(&info->m_meals);
 	pthread_mutex_destroy(&info->m_msg);
 	pthread_mutex_destroy(&info->m_stop);
 }
@@ -116,7 +89,7 @@ int	launching_threading(t_p *philos, t_info *info, pthread_t *th)
 	{
 		if (pthread_create(&th[i], NULL, &routine, &philos[i]))
 			perror("pthread_create failled");
-		//ft_usleep(30);
+		usleep(30);
 		i++;
 	}
 	i = 0;

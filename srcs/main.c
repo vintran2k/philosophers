@@ -14,7 +14,6 @@
 
 void	free_vars(t_p *philos, pthread_t *th, pthread_mutex_t *forks)
 {
-	free(philos[0].info->meals);
 	free(philos);
 	free(th);
 	free(forks);
@@ -51,7 +50,7 @@ int	main(int ac, char **av)
 	init_philos(philos, &info);
 	distribute_forks(philos, forks, info.n_philo);
 	launching_threading(philos, &info, th);
-	destroy_mutex(&info, forks);
-	free_vars(philos, th, forks);
+	//destroy_mutex(&info, forks);
+	//free_vars(philos, th, forks);
 	return (0);
 }

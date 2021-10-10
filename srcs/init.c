@@ -47,18 +47,10 @@ int	init_info(int ac, char **av, t_info *info)
 	else
 		info->n_meals = -1;
 	info->stop = 0;
-	info->meals = malloc(sizeof(int) * info->n_philo);
-	if (!info->meals)
-	{
-		perror("philo");
-		return (-1);
-	}
-	ft_bzero(info->meals, sizeof(int) * info->n_philo);
 	pthread_mutex_init(&info->m_info, NULL);
 	pthread_mutex_init(&info->m_stop, NULL);
 	pthread_mutex_init(&info->m_msg, NULL);
 	pthread_mutex_init(&info->m_last_eat, NULL);
-	pthread_mutex_init(&info->m_meals, NULL);
 	return (0);
 }
 
@@ -73,6 +65,7 @@ void	init_philos(t_p *philos, t_info *info)
 		philos[i].id = i + 1;
 		philos[i].n = info->n_philo;
 		philos[i].count = 0;
+		philos[i].stop = 0;
 		philos[i].t_die = info->t_to_die;
 		philos[i].t_eat = info->t_to_eat;
 		philos[i].t_sleep = info->t_to_sleep;

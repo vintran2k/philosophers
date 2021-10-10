@@ -109,14 +109,13 @@ void	print_status(t_p *p, char *status)
 	char	*res;
 	int		reslen;
 	
-	pthread_mutex_lock(&p->info->m_msg);
 	pthread_mutex_lock(&p->info->m_stop);
 	if (p->info->stop == 1)
 	{
-		pthread_mutex_unlock(&p->info->m_msg);
 		pthread_mutex_unlock(&p->info->m_stop);
 		return ;
 	}
+	pthread_mutex_unlock(&p->info->m_stop);
 	time = ft_itoa((int)(get_time() - p->info->t_start));
 	id = ft_itoa(p->id);
 	reslen = ft_strlen(time) + ft_strlen(id) + ft_strlen(status) + 4;
@@ -129,8 +128,6 @@ void	print_status(t_p *p, char *status)
 	ft_strcat(res, status);
 	ft_strcat(res, "\n");
 	write(1, res, reslen);
-	pthread_mutex_unlock(&p->info->m_msg);
-	pthread_mutex_unlock(&p->info->m_stop);
 	free(time);
 	free(id);
 	free(res);

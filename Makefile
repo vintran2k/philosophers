@@ -22,7 +22,7 @@ SRCS				=	main.c			\
 SRCS_BASENAME		=	$(addprefix $(SRCS_DIR), $(SRCS))
 OBJS				=	$(SRCS_BASENAME:.c=.o)
 CC					=	clang
-FLAGS				=	-Wall -Wextra -Werror -I ./inc/
+FLAGS				=	-Wall -Wextra -Werror -I ./inc/ -fsanitize=thread
 
 .c.o			:
 				$(CC) $(FLAGS) -c $< -o $(<:.c=.o)
@@ -30,7 +30,7 @@ FLAGS				=	-Wall -Wextra -Werror -I ./inc/
 all				:	$(NAME)
 
 $(NAME)			:	$(OBJS) $(HEADER)
-				$(CC) $(FLAGS) $(OBJS) -o $(NAME) -lpthread
+				$(CC) $(FLAGS) $(OBJS) -o $(NAME)
 				@echo [$(NAME)] : Created !
 
 clean			:

@@ -34,7 +34,6 @@ typedef struct s_info
 	pthread_mutex_t	m_stop;
 	pthread_mutex_t	m_msg;
 	pthread_mutex_t	m_last_eat;
-	pthread_mutex_t	m_meals;
 	
 }				t_info;
 
@@ -49,6 +48,7 @@ typedef struct s_p
 	unsigned int	t_sleep;
 	int				n_meals;
 	unsigned int	t_last_eat;
+	int				stop;
 	pthread_t		faucheuse;
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t	*l_fork;

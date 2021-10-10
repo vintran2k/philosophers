@@ -25,7 +25,9 @@ void	print_msg(t_p *p, char *msg)
 void	droitier(t_p *p)
 {
 	pthread_mutex_lock(p->r_fork);
+	pthread_mutex_lock(&p->info->m_msg);
 	print_status(p, "has taken a fork");
+	pthread_mutex_unlock(&p->info->m_msg);
 	if (p->n == 1)
 	{
 		pthread_mutex_unlock(p->r_fork);
@@ -33,8 +35,13 @@ void	droitier(t_p *p)
 		return ;
 	}
 	pthread_mutex_lock(p->l_fork);
+	pthread_mutex_lock(&p->info->m_msg);
 	print_status(p, "has taken a fork");
+	pthread_mutex_unlock(&p->info->m_msg);
+	pthread_mutex_lock(&p->info->m_msg);
 	print_status(p, "is eating");
+	pthread_mutex_unlock(&p->info->m_msg);
+	p->count++;
 	pthread_mutex_lock(&p->info->m_last_eat);
 	p->t_last_eat = get_time();
 	pthread_mutex_unlock(&p->info->m_last_eat);
@@ -46,7 +53,9 @@ void	droitier(t_p *p)
 void	gaucher(t_p *p)
 {
 	pthread_mutex_lock(p->l_fork);
+	pthread_mutex_lock(&p->info->m_msg);
 	print_status(p, "has taken a fork");
+	pthread_mutex_unlock(&p->info->m_msg);
 	if (p->n == 1)
 	{
 		pthread_mutex_unlock(p->l_fork);
@@ -54,8 +63,13 @@ void	gaucher(t_p *p)
 		return ;
 	}
 	pthread_mutex_lock(p->r_fork);
+	pthread_mutex_lock(&p->info->m_msg);
 	print_status(p, "has taken a fork");
+	pthread_mutex_unlock(&p->info->m_msg);
+	pthread_mutex_lock(&p->info->m_msg);
 	print_status(p, "is eating");
+	pthread_mutex_unlock(&p->info->m_msg);
+	p->count++;
 	pthread_mutex_lock(&p->info->m_last_eat);
 	p->t_last_eat = get_time();
 	pthread_mutex_unlock(&p->info->m_last_eat);
@@ -66,32 +80,27 @@ void	gaucher(t_p *p)
 
 void	eat_activity(t_p *p)
 {
-	if (p->count == 0 && p->id % 2 == 0)
-		gaucher(p);
+	if (p->n % 2 == 0 && p->id % 2 == 0)
+			gaucher(p);
 	else
 		droitier(p);
-	pthread_mutex_lock(&p->info->m_meals);
-	p->info->meals[p->id - 1]++;
-	pthread_mutex_unlock(&p->info->m_meals);
-	p->count++;
 }
 
 void	activity(t_p *p)
 {
-	int	stop;
-
-	pthread_mutex_lock(&p->info->m_stop);
-	stop = p->info->stop;
-	pthread_mutex_unlock(&p->info->m_stop);
-	if (!stop)
-		eat_activity(p);
-	pthread_mutex_lock(&p->info->m_stop);
-	stop = p->info->stop;
-	pthread_mutex_unlock(&p->info->m_stop);
-	if (!stop)
+	eat_activity(p);
+	if (p->n_meals != -1 && p->count == p->n_meals)
 	{
-		print_status(p, "is sleeping");
-		ft_usleep(p->t_sleep);
+		pthread_mutex_lock(&p->info->m_stop);
+		p->stop = 1;
+		pthread_mutex_unlock(&p->info->m_stop);
+		return ;
 	}
+	pthread_mutex_lock(&p->info->m_msg);
+	print_status(p, "is sleeping");
+	pthread_mutex_unlock(&p->info->m_msg);
+	ft_usleep(p->t_sleep);
+	pthread_mutex_lock(&p->info->m_msg);
 	print_status(p, "is thinking");
+	pthread_mutex_unlock(&p->info->m_msg);
 }
