@@ -6,7 +6,7 @@
 #    By: vintran <vintran@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/01 18:05:53 by vintran           #+#    #+#              #
-#    Updated: 2021/10/05 17:17:08 by vintran          ###   ########.fr        #
+#    Updated: 2021/10/11 15:38:12 by vintran          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ SRCS				=	main.c			\
 SRCS_BASENAME		=	$(addprefix $(SRCS_DIR), $(SRCS))
 OBJS				=	$(SRCS_BASENAME:.c=.o)
 CC					=	clang
-FLAGS				=	-Wall -Wextra -Werror -I ./inc/ -fsanitize=thread
+FLAGS				=	-Wall -Wextra -Werror -I ./inc/
 
 .c.o			:
 				$(CC) $(FLAGS) -c $< -o $(<:.c=.o)
@@ -30,7 +30,7 @@ FLAGS				=	-Wall -Wextra -Werror -I ./inc/ -fsanitize=thread
 all				:	$(NAME)
 
 $(NAME)			:	$(OBJS) $(HEADER)
-				$(CC) $(FLAGS) $(OBJS) -o $(NAME)
+				$(CC) $(FLAGS) $(OBJS) -o $(NAME) -lpthread
 				@echo [$(NAME)] : Created !
 
 clean			:

@@ -6,7 +6,7 @@
 /*   By: vintran <vintran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 16:32:34 by vintran           #+#    #+#             */
-/*   Updated: 2021/10/08 14:03:46 by vintran          ###   ########.fr       */
+/*   Updated: 2021/10/11 15:37:48 by vintran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,18 @@ void	gaucher(t_p *p)
 
 void	eat_activity(t_p *p)
 {
-	if (p->n % 2 == 0 && p->id % 2 == 0)
+	//if (p->n % 2 == 0)
+	//{
+		if (p->id % 2 == 0)
+			droitier(p);
+		else
 			gaucher(p);
-	else
-		droitier(p);
+	//}
+	//else
+	//{
+	//	gaucher(p);
+	//}
+	
 }
 
 void	activity(t_p *p)

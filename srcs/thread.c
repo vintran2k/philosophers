@@ -6,7 +6,7 @@
 /*   By: vintran <vintran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 16:49:48 by vintran           #+#    #+#             */
-/*   Updated: 2021/10/05 17:16:12 by vintran          ###   ########.fr       */
+/*   Updated: 2021/10/11 15:50:54 by vintran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ void	*routine(void *arg)
 	if (pthread_create(&p->faucheuse, NULL, &is_dead, p))
 		perror("pthread_create failled");
 	pthread_detach(p->faucheuse);
-	//if (p->id % 2 == 0)
-		//ft_usleep(p->t_eat / 10);
+	if (p->n % 2 != 0 && p->id % 2 == 0)
+		ft_usleep(5);
 	stop = 0;
 	while (!stop)
 	{
@@ -89,7 +89,7 @@ int	launching_threading(t_p *philos, t_info *info, pthread_t *th)
 	{
 		if (pthread_create(&th[i], NULL, &routine, &philos[i]))
 			perror("pthread_create failled");
-		usleep(30);
+		ft_usleep(3);
 		i++;
 	}
 	i = 0;
