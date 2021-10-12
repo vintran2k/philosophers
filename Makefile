@@ -6,7 +6,7 @@
 #    By: vintran <vintran@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/01 18:05:53 by vintran           #+#    #+#              #
-#    Updated: 2021/10/11 15:38:12 by vintran          ###   ########.fr        #
+#    Updated: 2021/10/12 18:23:34 by vintran          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,5 +44,3 @@ fclean			:	clean
 re				:	fclean all
 
 .PHONY: 		clean fclean all re
-
-#valgrind --tool=helgrind ./philo 4 410 200 200 

@@ -6,7 +6,7 @@
 /*   By: vintran <vintran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 16:32:34 by vintran           #+#    #+#             */
-/*   Updated: 2021/10/11 15:37:48 by vintran          ###   ########.fr       */
+/*   Updated: 2021/10/12 18:14:19 by vintran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ void	gaucher(t_p *p)
 
 void	eat_activity(t_p *p)
 {
+	if (p->n % 2 != 0 && (p->id == 1 || p->id == p->n))
+		pthread_mutex_lock(&p->info->m_impair);	//
 	//if (p->n % 2 == 0)
 	//{
 		if (p->id % 2 == 0)
@@ -89,9 +91,10 @@ void	eat_activity(t_p *p)
 	//}
 	//else
 	//{
-	//	gaucher(p);
+		//droitier(p);
 	//}
-	
+	if (p->n % 2 != 0  && (p->id == 1 || p->id == p->n))
+		pthread_mutex_unlock(&p->info->m_impair);	//
 }
 
 void	activity(t_p *p)
@@ -111,4 +114,6 @@ void	activity(t_p *p)
 	pthread_mutex_lock(&p->info->m_msg);
 	print_status(p, "is thinking");
 	pthread_mutex_unlock(&p->info->m_msg);
+	if (p->n % 2 != 0)
+		ft_usleep(100);
 }

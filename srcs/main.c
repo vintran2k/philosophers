@@ -6,7 +6,7 @@
 /*   By: vintran <vintran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 18:18:02 by vintran           #+#    #+#             */
-/*   Updated: 2021/10/05 17:16:53 by vintran          ###   ########.fr       */
+/*   Updated: 2021/10/12 13:48:31 by vintran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	main(int ac, char **av)
 	init_philos(philos, &info);
 	distribute_forks(philos, forks, info.n_philo);
 	launching_threading(philos, &info, th);
-	//destroy_mutex(&info, forks);
-	//free_vars(philos, th, forks);
+	destroy_mutex(&info, forks);
+	free_vars(philos, th, forks);
 	return (0);
 }

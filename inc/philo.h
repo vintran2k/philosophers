@@ -6,7 +6,7 @@
 /*   By: vintran <vintran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/26 16:00:41 by vintran           #+#    #+#             */
-/*   Updated: 2021/10/08 14:01:37 by vintran          ###   ########.fr       */
+/*   Updated: 2021/10/12 14:33:14 by vintran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct s_info
 	int				n_meals;
 	int				*meals;
 	int				stop;
-	pthread_mutex_t	m_info;
+	pthread_mutex_t	m_impair;
 	pthread_mutex_t	m_stop;
 	pthread_mutex_t	m_msg;
 	pthread_mutex_t	m_last_eat;
