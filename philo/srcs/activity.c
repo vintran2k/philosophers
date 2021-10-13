@@ -6,7 +6,7 @@
 /*   By: vintran <vintran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 16:32:34 by vintran           #+#    #+#             */
-/*   Updated: 2021/10/12 18:14:19 by vintran          ###   ########.fr       */
+/*   Updated: 2021/10/13 14:08:49 by vintran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	print_msg(t_p *p, char *msg)
 	pthread_mutex_unlock(&p->info->m_stop);
 }
 
-void	droitier(t_p *p)
+void	right_handed(t_p *p)
 {
 	pthread_mutex_lock(p->r_fork);
 	pthread_mutex_lock(&p->info->m_msg);
@@ -50,7 +50,7 @@ void	droitier(t_p *p)
 	pthread_mutex_unlock(p->l_fork);
 }
 
-void	gaucher(t_p *p)
+void	left_handed(t_p *p)
 {
 	pthread_mutex_lock(p->l_fork);
 	pthread_mutex_lock(&p->info->m_msg);
@@ -80,21 +80,10 @@ void	gaucher(t_p *p)
 
 void	eat_activity(t_p *p)
 {
-	if (p->n % 2 != 0 && (p->id == 1 || p->id == p->n))
-		pthread_mutex_lock(&p->info->m_impair);	//
-	//if (p->n % 2 == 0)
-	//{
-		if (p->id % 2 == 0)
-			droitier(p);
-		else
-			gaucher(p);
-	//}
-	//else
-	//{
-		//droitier(p);
-	//}
-	if (p->n % 2 != 0  && (p->id == 1 || p->id == p->n))
-		pthread_mutex_unlock(&p->info->m_impair);	//
+	if (p->id % 2 == 0)
+		right_handed(p);
+	else
+		left_handed(p);
 }
 
 void	activity(t_p *p)

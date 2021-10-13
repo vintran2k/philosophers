@@ -6,7 +6,7 @@
 /*   By: vintran <vintran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/26 16:00:41 by vintran           #+#    #+#             */
-/*   Updated: 2021/10/12 14:33:14 by vintran          ###   ########.fr       */
+/*   Updated: 2021/10/13 14:02:44 by vintran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,9 @@ typedef struct s_info
 	int				n_meals;
 	int				*meals;
 	int				stop;
-	pthread_mutex_t	m_impair;
 	pthread_mutex_t	m_stop;
 	pthread_mutex_t	m_msg;
 	pthread_mutex_t	m_last_eat;
-	
 }				t_info;
 
 typedef struct s_p
@@ -56,6 +54,8 @@ typedef struct s_p
 
 void			ft_bzero(void *s, size_t n);
 int				ft_isdigit(int c);
+int				ft_strlen(char *str);
+int				ft_strcmp(const char *s1, const char *s2);
 long			long_atoi(char *str);
 unsigned int	get_time(void);
 void			print_status(t_p *p, char *status); //

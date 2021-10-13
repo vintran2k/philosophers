@@ -6,25 +6,13 @@
 /*   By: vintran <vintran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 16:42:30 by vintran           #+#    #+#             */
-/*   Updated: 2021/09/23 17:58:08 by vintran          ###   ########.fr       */
+/*   Updated: 2021/10/13 14:02:13 by vintran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-/*
-void	print_msg(t_p *p, char *msg)
-{
-	pthread_mutex_lock(&p->info->m_msg);
-	pthread_mutex_lock(&p->info->m_stop);
-	if (!p->info->stop)
-		printf("%7dms  %3d    %s\n", get_time() - p->info->t_start, p->id, msg);
-	pthread_mutex_unlock(&p->info->m_msg);
-	pthread_mutex_unlock(&p->info->m_stop);
-}
-*/
-
-int		len(long nb)
+int	itoa_len(long nb)
 {
 	int		len;
 
@@ -46,20 +34,18 @@ int		len(long nb)
 
 char	*ft_itoa(int nb)
 {
-	char *str;
+	char	*str;
 	long	n;
 	int		i;
 
 	n = nb;
-	i = len(n);
-	if (!(str = (char*)malloc(sizeof(char) * (i + 1))))
+	i = itoa_len(n);
+	str = malloc(sizeof(char) * (i + 1));
+	if (!str)
 		return (NULL);
 	str[i--] = '\0';
 	if (n == 0)
-	{
 		str[0] = 48;
-		return (str);
-	}
 	if (n < 0)
 	{
 		str[0] = '-';
@@ -92,43 +78,48 @@ char	*ft_strcat(char *dest, char *src)
 	return (dest);
 }
 
-int		ft_strlen(char *str)
+int	create_string(t_p *p, char *status, char **str)
 {
-	int	i;
+	char	*strs[3];
+	int		reslen;
+	int		i;
 
+	strs[0] = ft_itoa((int)(get_time() - p->info->t_start));
+	strs[1] = ft_itoa(p->id);
+	strs[2] = status;
+	reslen = ft_strlen(strs[0]) + ft_strlen(strs[1]) + ft_strlen(strs[2]) + 4;
+	*str = malloc(reslen);
+	*str[0] = '\0';
 	i = 0;
-	while (str[i])
+	while (i < 3)
+	{
+		ft_strcat(*str, strs[i]);
+		if (i < 2)
+		{
+			ft_strcat(*str, " ");
+			free(strs[i]);
+		}
 		i++;
-	return (i);
+	}
+	ft_strcat(*str, "\n");
+	return (reslen);
 }
 
 void	print_status(t_p *p, char *status)
 {
-	char	*time;
-	char	*id;
-	char	*res;
-	int		reslen;
-	
+	char	*str;
+	int		len;
+
 	pthread_mutex_lock(&p->info->m_stop);
 	if (p->info->stop == 1)
 	{
 		pthread_mutex_unlock(&p->info->m_stop);
 		return ;
 	}
+	if (!ft_strcmp(status, "died"))
+		p->info->stop = 1;
 	pthread_mutex_unlock(&p->info->m_stop);
-	time = ft_itoa((int)(get_time() - p->info->t_start));
-	id = ft_itoa(p->id);
-	reslen = ft_strlen(time) + ft_strlen(id) + ft_strlen(status) + 4;
-	res = malloc(reslen);
-	res[0] = '\0';
-	ft_strcat(res, time);
-	ft_strcat(res, " ");
-	ft_strcat(res, id);
-	ft_strcat(res, " ");
-	ft_strcat(res, status);
-	ft_strcat(res, "\n");
-	write(1, res, reslen);
-	free(time);
-	free(id);
-	free(res);
+	len = create_string(p, status, &str);
+	write(1, str, len);
+	free(str);
 }

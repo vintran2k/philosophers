@@ -6,7 +6,7 @@
 /*   By: vintran <vintran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/27 17:18:42 by vintran           #+#    #+#             */
-/*   Updated: 2021/10/12 14:33:10 by vintran          ###   ########.fr       */
+/*   Updated: 2021/10/13 13:23:04 by vintran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int	init_info(int ac, char **av, t_info *info)
 	else
 		info->n_meals = -1;
 	info->stop = 0;
-	pthread_mutex_init(&info->m_impair, NULL);
 	pthread_mutex_init(&info->m_stop, NULL);
 	pthread_mutex_init(&info->m_msg, NULL);
 	pthread_mutex_init(&info->m_last_eat, NULL);

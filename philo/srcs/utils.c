@@ -6,7 +6,7 @@
 /*   By: vintran <vintran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/26 19:21:20 by vintran           #+#    #+#             */
-/*   Updated: 2021/10/05 16:49:31 by vintran          ###   ########.fr       */
+/*   Updated: 2021/10/13 14:02:21 by vintran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,26 @@ void	ft_bzero(void *s, size_t n)
 int	ft_isdigit(int c)
 {
 	return (c >= '0' && c <= '9');
+}
+
+int	ft_strlen(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
+
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	int	i;
+
+	i = 0;
+	while (s1[i] && s2[i] && s1[i] == s2[i])
+		i++;
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 
 long	long_atoi(char *str)
@@ -51,28 +71,4 @@ long	long_atoi(char *str)
 		i++;
 	}
 	return (ret * sign);
-}
-
-unsigned int	get_time(void)
-{
-	unsigned int	ret;
-	struct timeval	time;
-
-	ret = 0;
-	if (gettimeofday(&time, NULL) == -1)
-	{
-		perror("gettimeofday() failled");
-		return (0);
-	}
-	ret = (time.tv_sec * 1000) + (time.tv_usec / 1000);
-	return (ret);
-}
-
-void	ft_usleep(unsigned int time_in_ms)
-{
-	unsigned int	start_time;
-
-	start_time = get_time();
-	while ((get_time() - start_time) < time_in_ms)
-		usleep(time_in_ms / 10);
 }

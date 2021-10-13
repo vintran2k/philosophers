@@ -6,7 +6,7 @@
 #    By: vintran <vintran@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/01 18:05:53 by vintran           #+#    #+#              #
-#    Updated: 2021/10/12 18:23:34 by vintran          ###   ########.fr        #
+#    Updated: 2021/10/13 14:00:15 by vintran          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ SRCS				=	main.c			\
 						init.c			\
 						utils.c			\
 						thread.c		\
+						time.c			\
 						activity.c		\
 						print.c
 SRCS_BASENAME		=	$(addprefix $(SRCS_DIR), $(SRCS))
