@@ -6,7 +6,7 @@
 /*   By: vintran <vintran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 18:18:02 by vintran           #+#    #+#             */
-/*   Updated: 2021/10/12 13:48:31 by vintran          ###   ########.fr       */
+/*   Updated: 2021/11/14 16:27:15 by vintran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,9 @@ void	free_vars(t_p *philos, pthread_t *th, pthread_mutex_t *forks)
 	free(forks);
 }
 
-int	malloc_error(t_info *info)
+int	malloc_error(void)
 {
 	perror("philo");
-	free(info->meals);
 	return (1);
 }
 
@@ -40,13 +39,13 @@ int	main(int ac, char **av)
 	}
 	philos = malloc(sizeof(t_p) * info.n_philo);
 	if (!philos)
-		return (malloc_error(&info));
+		return (malloc_error());
 	th = malloc(sizeof(pthread_t) * info.n_philo);
 	if (!th)
-		return (malloc_error(&info));
+		return (malloc_error());
 	forks = malloc(sizeof(pthread_mutex_t) * info.n_philo);
 	if (!forks)
-		return (malloc_error(&info));
+		return (malloc_error());
 	init_philos(philos, &info);
 	distribute_forks(philos, forks, info.n_philo);
 	launching_threading(philos, &info, th);

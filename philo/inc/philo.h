@@ -6,7 +6,7 @@
 /*   By: vintran <vintran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/26 16:00:41 by vintran           #+#    #+#             */
-/*   Updated: 2021/10/13 14:02:44 by vintran          ###   ########.fr       */
+/*   Updated: 2021/11/14 16:27:36 by vintran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ typedef struct s_info
 	unsigned int	t_to_sleep;
 	unsigned int	t_start;
 	int				n_meals;
-	int				*meals;
 	int				stop;
 	pthread_mutex_t	m_stop;
 	pthread_mutex_t	m_msg;

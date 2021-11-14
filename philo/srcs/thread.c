@@ -6,7 +6,7 @@
 /*   By: vintran <vintran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 16:49:48 by vintran           #+#    #+#             */
-/*   Updated: 2021/10/13 13:34:27 by vintran          ###   ########.fr       */
+/*   Updated: 2021/11/14 15:19:39 by vintran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	*is_dead(void *arg)
 			pthread_mutex_unlock(&p->info->m_last_eat);
 		pthread_mutex_lock(&p->info->m_stop);
 		stop = p->info->stop + p->stop;
-		p->info->stop = stop;
 		pthread_mutex_unlock(&p->info->m_stop);
 	}
 	return (NULL);
