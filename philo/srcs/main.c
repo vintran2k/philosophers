@@ -6,23 +6,50 @@
 /*   By: vintran <vintran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 18:18:02 by vintran           #+#    #+#             */
-/*   Updated: 2021/11/14 16:27:15 by vintran          ###   ########.fr       */
+/*   Updated: 2022/04/05 14:02:46 by vintran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	free_vars(t_p *philos, pthread_t *th, pthread_mutex_t *forks)
+void	free_ptrs(t_p *philos, pthread_t *th, pthread_mutex_t *forks)
 {
-	free(philos);
-	free(th);
-	free(forks);
+	if (philos)
+	{
+		free(philos);
+		philos = NULL;
+	}
+	if (th)
+	{
+		free(th);
+		th = NULL;
+	}
+	if (forks)
+	{
+		free(forks);
+		forks = NULL;
+	}
 }
 
-int	malloc_error(void)
+int	malloc_error(t_p *philos, pthread_t *th, pthread_mutex_t *forks)
 {
+	free_ptrs(philos, th, forks);
 	perror("philo");
-	return (1);
+	return (-1);
+}
+
+int	malloc_ptrs(t_p **philos, pthread_t **th, pthread_mutex_t **forks, int n)
+{
+	*philos = malloc(sizeof(t_p) * n);
+	if (!*philos)
+		return (malloc_error(*philos, *th, *forks));
+	*th = malloc(sizeof(pthread_t) * n);
+	if (!*th)
+		return (malloc_error(*philos, *th, *forks));
+	*forks = malloc(sizeof(pthread_mutex_t) * n);
+	if (!*forks)
+		return (malloc_error(*philos, *th, *forks));
+	return (0);
 }
 
 int	main(int ac, char **av)
@@ -37,19 +64,15 @@ int	main(int ac, char **av)
 		printf("Error\nInvalid arguments\n");
 		return (1);
 	}
-	philos = malloc(sizeof(t_p) * info.n_philo);
-	if (!philos)
-		return (malloc_error());
-	th = malloc(sizeof(pthread_t) * info.n_philo);
-	if (!th)
-		return (malloc_error());
-	forks = malloc(sizeof(pthread_mutex_t) * info.n_philo);
-	if (!forks)
-		return (malloc_error());
+	philos = NULL;
+	th = NULL;
+	forks = NULL;
+	if (malloc_ptrs(&philos, &th, &forks, info.n_philo) == -1)
+		return (1);
 	init_philos(philos, &info);
 	distribute_forks(philos, forks, info.n_philo);
 	launching_threading(philos, &info, th);
 	destroy_mutex(&info, forks);
-	free_vars(philos, th, forks);
+	free_ptrs(philos, th, forks);
 	return (0);
 }

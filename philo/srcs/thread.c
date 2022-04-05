@@ -6,7 +6,7 @@
 /*   By: vintran <vintran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 16:49:48 by vintran           #+#    #+#             */
-/*   Updated: 2021/11/14 15:19:39 by vintran          ###   ########.fr       */
+/*   Updated: 2022/04/05 14:06:44 by vintran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ void	*routine(void *arg)
 	p = (t_p *)arg;
 	p->t_last_eat = p->info->t_start;
 	if (pthread_create(&p->faucheuse, NULL, &is_dead, p))
-		perror("pthread_create failled");
-	pthread_detach(p->faucheuse);
+		perror("pthread_create failed");
 	stop = 0;
 	while (!stop)
 	{
@@ -56,6 +55,8 @@ void	*routine(void *arg)
 		stop = p->info->stop + p->stop;
 		pthread_mutex_unlock(&p->info->m_stop);
 	}
+	if (pthread_join(p->faucheuse, NULL))
+		perror("pthread_join failed");
 	return (NULL);
 }
 
@@ -83,14 +84,14 @@ int	launching_threading(t_p *philos, t_info *info, pthread_t *th)
 	while (i < info->n_philo)
 	{
 		if (pthread_create(&th[i], NULL, &routine, &philos[i]))
-			perror("pthread_create failled");
+			perror("pthread_create failed");
 		i++;
 	}
 	i = 0;
 	while (i < info->n_philo)
 	{
 		if (pthread_join(th[i], NULL))
-			perror("join failled");
+			perror("pthread_join failed");
 		i++;
 	}
 	return (0);

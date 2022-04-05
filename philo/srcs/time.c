@@ -6,7 +6,7 @@
 /*   By: vintran <vintran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 13:59:09 by vintran           #+#    #+#             */
-/*   Updated: 2021/10/13 14:00:01 by vintran          ###   ########.fr       */
+/*   Updated: 2022/04/05 14:07:10 by vintran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ unsigned int	get_time(void)
 	ret = 0;
 	if (gettimeofday(&time, NULL) == -1)
 	{
-		perror("gettimeofday() failled");
+		perror("gettimeofday() failed");
 		return (0);
 	}
 	ret = (time.tv_sec * 1000) + (time.tv_usec / 1000);

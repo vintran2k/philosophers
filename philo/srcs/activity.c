@@ -6,13 +6,13 @@
 /*   By: vintran <vintran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 16:32:34 by vintran           #+#    #+#             */
-/*   Updated: 2021/10/13 14:08:49 by vintran          ###   ########.fr       */
+/*   Updated: 2022/04/05 13:55:32 by vintran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	print_msg(t_p *p, char *msg)
+/*void	print_msg(t_p *p, char *msg)
 {
 	pthread_mutex_lock(&p->info->m_msg);
 	pthread_mutex_lock(&p->info->m_stop);
@@ -20,7 +20,7 @@ void	print_msg(t_p *p, char *msg)
 		printf("%7dms  %3d    %s\n", get_time() - p->info->t_start, p->id, msg);
 	pthread_mutex_unlock(&p->info->m_msg);
 	pthread_mutex_unlock(&p->info->m_stop);
-}
+}*/
 
 void	right_handed(t_p *p)
 {
